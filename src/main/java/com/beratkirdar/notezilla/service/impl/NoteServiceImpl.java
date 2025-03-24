@@ -31,6 +31,11 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public Note save(Note note) {
+
+        String title = note.getNote().substring(0, 30);
+
+        note.setTitle(title);
+
         return noteRepository.save(note);
     }
 
