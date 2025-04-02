@@ -8,12 +8,12 @@ public interface NoteService {
 
     List<Note> findAll();
 
-    Note findById(int id);
+    Note findById(Long id);
 
     Note save(Note note);
 
     Note update(Note note);
 
-    void deleteById(int id);
+    void deleteById(Long id);
 
 }

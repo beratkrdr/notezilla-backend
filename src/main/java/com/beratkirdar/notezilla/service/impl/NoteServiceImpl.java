@@ -25,7 +25,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public Note findById(int id) {
+    public Note findById(Long id) {
         return noteRepository.findById(id).orElseThrow(() -> new RuntimeException("Note not found"));
     }
 
@@ -52,7 +52,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(Long id) {
         noteRepository.deleteById(id);
     }
 

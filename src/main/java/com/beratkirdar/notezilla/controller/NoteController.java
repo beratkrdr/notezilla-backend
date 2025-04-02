@@ -24,7 +24,7 @@ public class NoteController {
     }
 
     @GetMapping("/{noteId}")
-    public Note findById(@PathVariable int noteId){
+    public Note findById(@PathVariable Long noteId){
         return noteService.findById(noteId);
     }
 
