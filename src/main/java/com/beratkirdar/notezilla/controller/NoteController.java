@@ -1,6 +1,6 @@
 package com.beratkirdar.notezilla.controller;
 
-import com.beratkirdar.notezilla.model.Note;
+import com.beratkirdar.notezilla.entity.Note;
 import com.beratkirdar.notezilla.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

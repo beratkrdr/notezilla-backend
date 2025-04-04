@@ -1,6 +1,6 @@
 package com.beratkirdar.notezilla.service;
 
-import com.beratkirdar.notezilla.model.Note;
+import com.beratkirdar.notezilla.entity.Note;
 
 import java.util.List;
 
