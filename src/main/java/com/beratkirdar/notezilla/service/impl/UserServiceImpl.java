@@ -1,6 +1,7 @@
 package com.beratkirdar.notezilla.service.impl;
 
 import com.beratkirdar.notezilla.entity.User;
+import com.beratkirdar.notezilla.entity.UserPrincipal;
 import com.beratkirdar.notezilla.repository.UserRepository;
 import com.beratkirdar.notezilla.service.JwtService;
 import com.beratkirdar.notezilla.service.UserService;
@@ -10,8 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.sql.SQLException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,9 +34,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<String> register(User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully!");
+        try{
+
+            user.setPassword(encoder.encode(user.getPassword()));
+            userRepository.save(user);
+            return ResponseEntity.ok("User registered successfully!");
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Register error! - "+e.getMessage());
+        }
+
     }
 
     @Override
@@ -43,6 +55,16 @@ public class UserServiceImpl implements UserService {
         }
 
         return ResponseEntity.ok(jwtService.generateToken(user.getEmail()));
+    }
+
+
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        String username = userPrincipal.getUsername();
+
+        return userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
 }

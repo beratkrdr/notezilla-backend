@@ -9,4 +9,6 @@ public interface UserService {
 
     ResponseEntity<String> login(User user);
 
+    User getCurrentUser();
+
 }

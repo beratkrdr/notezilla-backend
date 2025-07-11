@@ -1,8 +1,10 @@
 package com.beratkirdar.notezilla.service.impl;
 
 import com.beratkirdar.notezilla.entity.Note;
+import com.beratkirdar.notezilla.entity.User;
 import com.beratkirdar.notezilla.repository.NoteRepository;
 import com.beratkirdar.notezilla.service.NoteService;
+import com.beratkirdar.notezilla.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +14,20 @@ import java.util.List;
 @Service
 public class NoteServiceImpl implements NoteService {
 
-    private NoteRepository noteRepository;
+    private final NoteRepository noteRepository;
+    private final UserService userService;
 
     @Autowired
-    public NoteServiceImpl(NoteRepository noteRepository){
+    public NoteServiceImpl(NoteRepository noteRepository, UserService userService){
         this.noteRepository = noteRepository;
+        this.userService = userService;
     }
 
     @Override
     public List<Note> findAll() {
-        return noteRepository.findAll();
+        User user = userService.getCurrentUser();
+
+        return noteRepository.findByUser(user);
     }
 
     @Override
@@ -32,9 +38,11 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public Note save(Note note) {
 
+        User user = userService.getCurrentUser();
         String title = note.getNote().substring(0, 30);
 
         note.setTitle(title);
+        note.setUser(user);
 
         return noteRepository.save(note);
     }

@@ -19,6 +19,9 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    private User user;
+
     private String title;
 
     @Column(columnDefinition = "TEXT")

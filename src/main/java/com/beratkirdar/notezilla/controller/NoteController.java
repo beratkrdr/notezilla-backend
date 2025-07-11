@@ -3,6 +3,7 @@ package com.beratkirdar.notezilla.controller;
 import com.beratkirdar.notezilla.entity.Note;
 import com.beratkirdar.notezilla.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,23 +20,29 @@ public class NoteController {
     }
 
     @GetMapping
-    public List<Note> findAll(){
-        return noteService.findAll();
+    public ResponseEntity<List<Note>> findAll(){
+        return ResponseEntity.ok(noteService.findAll());
     }
 
     @GetMapping("/{noteId}")
-    public Note findById(@PathVariable Long noteId){
-        return noteService.findById(noteId);
+    public ResponseEntity<Note> findById(@PathVariable Long noteId){
+        return ResponseEntity.ok(noteService.findById(noteId));
     }
 
     @PostMapping
-    public Note save(@RequestBody Note note){
-        return noteService.save(note);
+    public ResponseEntity<Note> save(@RequestBody Note note){
+        return ResponseEntity.ok(noteService.save(note));
     }
 
     @PutMapping
-    public Note update(@RequestBody Note note){
-        return noteService.update(note);
+    public ResponseEntity<Note> update(@RequestBody Note note){
+        return ResponseEntity.ok(noteService.update(note));
+    }
+
+    @DeleteMapping("/{noteId}")
+    public ResponseEntity<Void> delete(@PathVariable Long noteId){
+        noteService.deleteById(noteId);
+        return ResponseEntity.ok().build();
     }
 
 }
