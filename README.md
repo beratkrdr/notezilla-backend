@@ -37,8 +37,8 @@ Notezilla is a lightweight backend REST API built with Spring Boot that allows u
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/notezilla.git
-cd notezilla
+git clone https://github.com/beratkrdr/notezilla-backend.git
+cd notezilla-backend
 ```
 
 ### 2. Build the project
