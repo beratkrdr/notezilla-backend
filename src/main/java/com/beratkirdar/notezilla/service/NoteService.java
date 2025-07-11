@@ -16,4 +16,6 @@ public interface NoteService {
 
     void deleteById(Long id);
 
+    List<Note> search(String keyword);
+
 }

@@ -64,4 +64,11 @@ public class NoteServiceImpl implements NoteService {
         noteRepository.deleteById(id);
     }
 
+    @Override
+    public List<Note> search(String keyword) {
+        User user = userService.getCurrentUser();
+
+        return noteRepository.findByUserAndTitleContainingOrUserAndNoteContaining(user, keyword, user, keyword);
+    }
+
 }

@@ -45,4 +45,9 @@ public class NoteController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<Note>> search(@RequestParam String keyword){
+        return ResponseEntity.ok(noteService.search(keyword));
+    }
+
 }
